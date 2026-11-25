@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Wong Jun Yong | Interactive 3D Portfolio</title>
+  <meta name="description" content="Wong Jun Yong — Business Analytics | AI, RAG & Intelligent Automation | Data Analytics & BI. Creator of SmartOps AI, 2026 Sunway Capstone Showcase Champion." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three.module.min.js" } }
+  </script>
+</head>
+<body>
+
+  <!-- Intro loader -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <span class="loader-star">*</span>
+      <span class="loader-name">WONG<br />JUN YONG</span>
+      <div class="loader-bar"><i id="loaderFill"></i></div>
+    </div>
+  </div>
+
+  <!-- Custom cursor (desktop only) -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" aria-hidden="true"><i id="scrollFill"></i></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" aria-label="Primary">
+    <a href="#hero" class="nav-brand"><span class="star">*</span> WJY</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#smartops">SmartOps AI</a>
+      <a href="#projects">Projects</a>
+      <a href="#awards">Awards</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="./assets/resume/Wong_Jun_Yong_Resume.pdf" download="Wong_Jun_Yong_Resume.pdf" class="nav-cv magnetic">⬇ CV</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero" id="hero">
+    <canvas id="hero3d" aria-hidden="true"></canvas>
+    <div class="hero-grid-overlay" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow reveal"><span class="pulse"></span> Open to graduate roles · Sep 2026</p>
+        <h1 class="hero-title" aria-label="Wong Jun Yong">
+          <span class="hero-star">*</span>
+          <span class="line"><span class="split">WONG</span></span>
+          <span class="line"><span class="split">JUN YONG</span></span>
+        </h1>
+        <p class="hero-role reveal">Business Analytics <i>|</i> AI, RAG &amp; Intelligent Automation <i>|</i> Data Analytics &amp; BI</p>
+        <p class="hero-intro reveal">
+          I build <strong>SmartOps AI</strong> — a governed RAG-LLM decision-support platform that turns vague hotel maintenance complaints into
+          evidence-grounded recommendations, safety-aware routing and automated technician workflows.
+          <span class="champ-chip">🏆 2026 Capstone Showcase Champion · 7 awards</span>
+        </p>
+        <div class="hero-cta reveal">
+          <a href="./assets/resume/Wong_Jun_Yong_Resume.pdf" download="Wong_Jun_Yong_Resume.pdf" class="btn btn-primary magnetic"><span>Download Resume</span><b>↓</b></a>
+          <a href="#smartops" class="btn btn-ghost magnetic"><span>Try the live demo</span><b>→</b></a>
+        </div>
+      </div>
+
+      <!-- Interactive 3D CV card -->
+      <div class="hero-cv reveal">
+        <div class="cv-stage" id="cvStage">
+          <div class="cv-tilt" id="cvTilt">
+            <div class="cv-card" id="cvCard" role="button" tabindex="0" aria-label="Flip resume preview between page 1 and page 2">
+              <div class="cv-face cv-front">
+                <img id="cvImg" src="./assets/resume/Wong_Jun_Yong_Resume_page_1.png" alt="Wong Jun Yong resume, page 1" />
+                <div class="cv-glare"></div>
+              </div>
+              <div class="cv-face cv-back">
+                <img src="./assets/resume/Wong_Jun_Yong_Resume_page_2.png" alt="Wong Jun Yong resume, page 2" />
+                <div class="cv-glare"></div>
+              </div>
+            </div>
+          </div>
+          <div class="cv-shadow"></div>
+        </div>
+        <div class="cv-controls">
+          <button class="chip active" data-cvpage="1">Page 01</button>
+          <button class="chip" data-cvpage="2">Page 02 ⟲</button>
+          <button class="chip" id="cvFull">🔍 Full view</button>
+        </div>
+        <p class="cv-hint">Hover to tilt · click to flip</p>
+      </div>
+    </div>
+
+    <div class="hero-rail" aria-hidden="true"><span>20</span><i><b id="railFill"></b></i><span>26</span></div>
+    <a href="#stats" class="scroll-cue" aria-label="Scroll down"><span></span></a>
+  </header>
+
+  <!-- Marquee -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>RAG-LLM</span><span>*</span><span>Hybrid Retrieval</span><span>*</span><span>Power BI</span><span>*</span><span>ERP P2P / O2C</span><span>*</span><span>FastAPI</span><span>*</span><span>Human-in-the-Loop</span><span>*</span><span>Transfer Pricing</span><span>*</span><span>Python · SQL</span><span>*</span>
+      <span>RAG-LLM</span><span>*</span><span>Hybrid Retrieval</span><span>*</span><span>Power BI</span><span>*</span><span>ERP P2P / O2C</span><span>*</span><span>FastAPI</span><span>*</span><span>Human-in-the-Loop</span><span>*</span><span>Transfer Pricing</span><span>*</span><span>Python · SQL</span><span>*</span>
+    </div>
+  </div>
+
+  <!-- ===================== STATS ===================== -->
+  <section class="stats" id="stats">
+    <div class="stat tilt reveal"><b class="count" data-to="7">0</b><span>Capstone Showcase awards incl. Overall Champion</span></div>
+    <div class="stat tilt reveal"><b><span class="count" data-to="90.2" data-dec="1">0</span>%</b><span>Post-rerank Hit@5 on 490 synthetic queries</span></div>
+    <div class="stat tilt reveal"><b class="count" data-to="152837">0</b><span>Complaints batch-processed through classifier + RAG</span></div>
+    <div class="stat tilt reveal"><b><span class="count" data-to="0">0</span></b><span>Critical / active-hazard cases auto-released</span></div>
+  </section>
+
+  <!-- ===================== SMARTOPS FEATURE ===================== -->
+  <section class="section dark" id="smartops">
+    <div class="section-head">
+      <p class="kicker">How SmartOps Works · Interactive Demo</p>
+      <h2 class="title"><span class="star">*</span> SMARTOPS AI</h2>
+      <p class="lead">Select a guest maintenance complaint and run SmartOps to watch how it classifies the issue, checks safety risk, and retrieves step-by-step troubleshooting and preventive actions from hotel manuals.</p>
+    </div>
+
+    <div class="rag-demo" id="ragDemo">
+      <!-- Left Control Panel -->
+      <div class="rag-panel">
+        <div class="rag-panel-head">
+          <span class="rag-tag">GUEST COMPLAINT SIMULATOR</span>
+          <h3>Try a guest maintenance complaint</h3>
+          <p>Each complaint retrieves its matching hotel maintenance scenario together with linked repair and preventive steps.</p>
+        </div>
+
+        <span class="scenario-label">1 · Select a guest complaint</span>
+        <div class="scenario-picker" role="group" aria-label="Maintenance complaint examples">
+          <button class="scenario-option active" type="button" data-scenario="plumbing" aria-pressed="true">
+            <small>D20 PLUMBING</small>
+            <b>Low hot-water pressure</b>
+          </button>
+          <button class="scenario-option" type="button" data-scenario="hvac" aria-pressed="false">
+            <small>D30 HVAC</small>
+            <b>Air conditioner leaking water</b>
+          </button>
+          <button class="scenario-option" type="button" data-scenario="electrical" aria-pressed="false">
+            <small>D50 ELECTRICAL</small>
+            <b>Guest-room socket has no power</b>
+          </button>
+        </div>
+
+        <div class="rag-form-grid">
+          <label class="rag-field">
+            <span>Room ID</span>
+            <input id="roomId" type="text" value="1208" aria-label="Room ID" maxlength="12" />
+          </label>
+          <label class="rag-field">
+            <span>Guest Complaint</span>
+            <textarea id="complaint" rows="2" readonly aria-label="Selected guest complaint">The hot water pressure in the shower is very low</textarea>
+          </label>
+        </div>
+        <p class="readonly-note">Complaint text matches a verified test scenario so the retrieved steps stay accurate and explainable.</p>
+
+        <button type="button" class="btn btn-primary magnetic rag-run" id="ragRunBtn">
+          <span>Run SmartOps</span><b>▶</b>
+        </button>
+
+        <div class="rag-progress" aria-hidden="true"><i id="ragBar"></i></div>
+        <p class="rag-status" id="ragStatus" aria-live="polite">Plumbing example selected — click Run SmartOps to begin.</p>
+
+        <div class="rag-stages" aria-label="SmartOps retrieval sequence">
+          <div class="rag-stage" id="ragStage1"><b>01</b><span id="ragCategoryStageText">Classify into D20 Plumbing</span></div>
+          <div class="rag-stage" id="ragStage2"><b>02</b><span>Find the closest hotel maintenance scenario</span></div>
+          <div class="rag-stage" id="ragStage3"><b>03</b><span>Retrieve step-by-step troubleshooting guidance</span></div>
+          <div class="rag-stage" id="ragStage4"><b>04</b><span>Retrieve preventive-maintenance steps</span></div>
+        </div>
+      </div>
+
+      <!-- Right Result Panel -->
+      <div class="rag-result" id="ragResultPanel" aria-live="polite">
+        <div class="rag-result-idle" id="ragResultIdle">
+          <span class="idle-star">*</span>
+          <h4>Ready to analyse complaint</h4>
+          <p>Choose any room scenario on the left and click <strong>Run SmartOps</strong> to inspect the grounded maintenance plan, safety checks, and technician steps.</p>
+        </div>
+
+        <div class="rag-result-body" id="ragResultBody" hidden>
+          <div class="trace-top">
+            <div>
+              <div class="case-meta" id="ragCaseId">CASE_20261124_PLUMBING</div>
+              <h3 id="ragResultTitle">Grounded Maintenance Recommendation</h3>
+              <p id="ragResultSummary">How the guest message turns into an evidence-backed repair plan.</p>
+            </div>
+            <div class="pipeline-status approved" id="ragApprovalBadge">AUTO APPROVED</div>
+          </div>
+
+          <div class="trace-rows">
+            <div class="trace-row">
+              <span>Room ID</span>
+              <div><b id="ragResultRoom">1208</b></div>
+            </div>
+            <div class="trace-row">
+              <span>Classified Team</span>
+              <div><b id="ragResultCategory">D20 Plumbing</b><small id="ragResultConfidence">Match certainty: 0.97</small></div>
+            </div>
+            <div class="trace-row">
+              <span>Matched Scenario</span>
+              <div><b class="mono-id" id="ragResultScenarioId">P-D20-001</b><small>Strongest matching scenario in hotel knowledge base</small></div>
+            </div>
+            <div class="trace-row">
+              <span>Identified Issue</span>
+              <div><b id="ragResultIssue">Low hot water pressure</b><small id="ragResultCause">Likely cause: Restricted flow in the hot-water service</small></div>
+            </div>
+            <div class="trace-row">
+              <span>Severity</span>
+              <div><b id="ragResultSeverity">LOW</b><small id="ragResultSeverityNote">Routine maintenance case</small></div>
+            </div>
+            <div class="trace-row">
+              <span>Evidence Check (Gate 1)</span>
+              <div><b id="ragResultGate1">Verified</b><small id="ragResultGate1Note">Hotel manual evidence is complete enough to answer safely</small></div>
+            </div>
+            <div class="trace-row">
+              <span>Release Decision (Gate 2)</span>
+              <div><b id="ragResultGate2">Auto-Approved</b><small id="ragResultGate2Note">Routine low-risk repair passed all safety checks</small></div>
+            </div>
+          </div>
+
+          <div class="procedure-grid">
+            <article class="procedure-card">
+              <span>ACTION PLAN</span>
+              <h4>Troubleshooting Steps</h4>
+              <ol class="procedure-list" id="ragTroubleshooting"></ol>
+            </article>
+            <article class="procedure-card">
+              <span>LONG-TERM CARE</span>
+              <h4>Preventive-Maintenance Steps</h4>
+              <ol class="procedure-list" id="ragPreventive"></ol>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi reveal"><b>94%</b><span>complaints routed to the right team automatically</span></div>
+      <div class="kpi reveal"><b>45/45</b><span>AI answers checked &amp; backed by hotel SOP manuals</span></div>
+      <div class="kpi reveal"><b>0</b><span>critical safety hazards released without human approval</span></div>
+      <div class="kpi reveal"><b>100%</b><span>complaints matched with complete repair &amp; safety steps</span></div>
+      <div class="kpi reveal"><b>98</b><span>real hotel maintenance scenarios in the knowledge base</span></div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <section class="section" id="projects">
+    <div class="section-head">
+      <p class="kicker">Selected work</p>
+      <h2 class="title"><span class="star">*</span> PROJECTS</h2>
+      <p class="lead">From AI engineering to ERP processes and business strategy. Tap a card for the full story.</p>
+    </div>
+    <div class="filters" id="projFilters">
+      <button class="chip active" data-f="all">All</button>
+      <button class="chip" data-f="ai">AI &amp; RAG</button>
+      <button class="chip" data-f="systems">Systems &amp; Web</button>
+      <button class="chip" data-f="business">Business &amp; ERP</button>
+    </div>
+    <div class="proj-grid" id="projGrid"><!-- rendered by app.js --></div>
+  </section>
+
+  <!-- ===================== AWARDS ===================== -->
+  <section class="section dark" id="awards">
+    <div class="section-head">
+      <p class="kicker">Sunway University Capstone Showcase · 11 Aug 2026</p>
+      <h2 class="title"><span class="star">*</span> 7 AWARDS</h2>
+      <p class="lead">Drag, swipe or use the arrows to spin the gallery. Click the front certificate to open it.</p>
+    </div>
+    <div class="carousel" id="carousel">
+      <div class="carousel-ring" id="carouselRing"></div>
+    </div>
+    <div class="carousel-ui">
+      <button class="round magnetic" id="carPrev" aria-label="Previous">←</button>
+      <button type="button" class="car-caption" id="carCaption" aria-label="Inspect front certificate"><b id="carTitle">Champion</b><span id="carTag">01 / 07 · Click to open</span></button>
+      <button class="round magnetic" id="carNext" aria-label="Next">→</button>
+    </div>
+  </section>
+
+  <!-- ===================== EXPERIENCE ===================== -->
+  <section class="section" id="experience">
+    <div class="section-head">
+      <p class="kicker">Where I've worked</p>
+      <h2 class="title"><span class="star">*</span> EXPERIENCE</h2>
+    </div>
+    <div class="timeline">
+      <article class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card tilt">
+          <span class="tl-date">Jan – Mar 2026</span>
+          <h3>Transfer Pricing Intern</h3>
+          <p class="tl-org">Grant Thornton Malaysia PLT</p>
+          <ul>
+            <li>Applied the Business Analytics Lifecycle (BALC) across transfer pricing engagements — from document extraction to analysis and documentation.</li>
+            <li>Built an OCR + RAG-LLM extraction workflow to parse financial disclosures, trial balances and intercompany agreements into a structured database.</li>
+            <li>Ran benchmarking, comparable-company research and ratio analysis (Berry ratio, operating margin, full-cost mark-up) to support arm's-length ranges.</li>
+            <li>Supported audit-ready Transfer Pricing Documentation in line with LHDN and OECD guidance.</li>
+          </ul>
+          <div class="tags"><span>Excel</span><span>SQL</span><span>OCR</span><span>RAG</span><span>TPD</span></div>
+        </div>
+      </article>
+      <article class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card tilt">
+          <span class="tl-date">Jun 2023 – Present</span>
+          <h3>Homestay Operator · Business Owner</h3>
+          <p class="tl-org">Independent Airbnb Operations</p>
+          <ul>
+            <li>Run end-to-end operations: listings, reservations, dynamic pricing, check-ins, housekeeping and vendors.</li>
+            <li>Automated guest communication and booking flows with standardised responses and digital check-in guides.</li>
+            <li>Designed triage and dispatch routines for maintenance incidents and vendor escalations to keep service continuous.</li>
+          </ul>
+          <div class="tags"><span>Operations</span><span>Automation</span><span>Pricing</span><span>Agile</span></div>
+        </div>
+      </article>
+      <article class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card tilt">
+          <span class="tl-date">Weekly · Saturdays</span>
+          <h3>Youth Team Leader</h3>
+          <p class="tl-org">PJ Character &amp; Talent Building Program (PJ 品格才艺班)</p>
+          <ul>
+            <li>Lead workshops for children aged 5–12 on character, emotional intelligence and communication.</li>
+            <li>Coordinate volunteer teams, resolve conflicts and manage session logistics.</li>
+          </ul>
+          <div class="tags"><span>Leadership</span><span>Communication</span></div>
+        </div>
+      </article>
+      <article class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card tilt">
+          <span class="tl-date">Sep 2023 – Sep 2026</span>
+          <h3>Bachelor of Business Analytics</h3>
+          <p class="tl-org">Sunway University · CGPA 3.30</p>
+          <ul>
+            <li>Foundation in Arts, Sunway College (Jul 2022 – Jul 2023) · CGPA 3.38.</li>
+            <li>Languages: English · Chinese (Mandarin) · Cantonese · Malay.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== SKILLS ===================== -->
+  <section class="section dark" id="skills">
+    <div class="section-head">
+      <p class="kicker">Toolkit</p>
+      <h2 class="title"><span class="star">*</span> SKILLS</h2>
+      <p class="lead">Drag the sphere to spin it. Hover a group to highlight its skills.</p>
+    </div>
+    <div class="skills-wrap">
+      <div class="tag-sphere" id="tagSphere" aria-label="Interactive skills sphere"></div>
+      <div class="skill-groups" id="skillGroups">
+        <button class="sg" data-g="data"><b>Data &amp; BI</b><span>Python · SQL · Excel · Pandas · Power BI · Tableau · EDA</span></button>
+        <button class="sg" data-g="ai"><b>AI &amp; RAG-LLM</b><span>RAG · LLM · BM25 · ChromaDB · Reranking · Prompting · OCR</span></button>
+        <button class="sg" data-g="sys"><b>Systems &amp; Methods</b><span>FastAPI · REST · MySQL · HITL · SCRUM · SDLC · BALC</span></button>
+        <button class="sg" data-g="biz"><b>Business</b><span>ERP P2P/O2C · Transfer Pricing · Process Improvement · Strategy</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="contact" id="contact">
+    <canvas id="contact3d" aria-hidden="true"></canvas>
+    <div class="contact-inner">
+      <p class="kicker">Let's build something useful</p>
+      <h2 class="contact-title">LET'S<br />CONNECT<span class="star">*</span></h2>
+      <p class="contact-sub">Petaling Jaya, Selangor · +60 13-994 1188 · wongjunyong30@gmail.com</p>
+      <div class="contact-btns">
+        <a class="btn btn-primary magnetic" href="./assets/resume/Wong_Jun_Yong_Resume.pdf" download="Wong_Jun_Yong_Resume.pdf"><span>Download Resume</span><b>↓</b></a>
+        <a class="btn btn-ghost light magnetic" href="https://www.linkedin.com/in/wongjunyong11" target="_blank" rel="noopener"><span>LinkedIn</span><b>↗</b></a>
+        <a class="btn btn-ghost light magnetic" href="https://wa.me/60139941188" target="_blank" rel="noopener"><span>WhatsApp</span><b>↗</b></a>
+        <button class="btn btn-ghost light magnetic" id="copyEmail"><span>Copy email</span><b>⧉</b></button>
+      </div>
+      <p class="foot">© 2026 Wong Jun Yong · Built with Three.js</p>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div><h3 id="modalTitle">Preview</h3><p id="modalSub"></p></div>
+        <div class="modal-actions">
+          <button class="mbtn" id="mPrev">←</button>
+          <button class="mbtn" id="mNext">→</button>
+          <a class="mbtn accent" id="mDownload" href="#" download>⬇ PDF</a>
+          <button class="mbtn" id="mClose" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+  <script type="module" src="scene.js"></script>
+</body>
+</html>
